@@ -3,6 +3,21 @@
 {% block content %}
 
 <h1>task list</h1>
+<table>
+    <tr>
+        <th>task</th>
+        <th>action</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td>{{task.title}}</td>
+        <td>
+            <a href="">view</a>
+        </td>
+    </tr>
+    {% endfor %}
+    
+</table>
   
 {% endblock content %}
 
