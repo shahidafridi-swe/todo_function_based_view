@@ -3,10 +3,10 @@
 {% block content %}
 
 <div class="card-header d-flex justify-content-between">
-    <!-- <div>
+    <div>
         <h1 >Hello <span class="text-uppercase">{{request.user}}...</span>  </h1>
-        <h3>You have <i>{{count}}</i> incomplete task{{ count|pluralize:"s" }}</h3>
-    </div> -->
+        <h3>You have <i>{{incomplete_task_count}}</i> incomplete task{{ incomplete_task_count|pluralize:"s" }}</h3>
+    </div>
     <div>
         {% if request.user.is_authenticated %}
         <a class="btn btn-outline-secondary" href="{% url 'logout' %}">Logout</a>
@@ -19,12 +19,12 @@
 
 
 <div class="d-flex rounded  m-1 p-3 justify-content-between align-items-center ">
-    <!-- <form class="w-50" method="get">
+    <form class="w-50" method="get">
         <div class="input-group mb-3">   
             <input type="search" name="search-area" class="form-control" placeholder="Search Your Task" aria-label="Recipient's username" aria-describedby="button-addon2" value="{{search_input}}" >
             <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
          </div>
-    </form> -->
+    </form>
       
     <div>
         <h4><a  class="text-success text-decoration-none btn btn-dark" href="{% url 'task-create' %}"> 
@@ -39,7 +39,7 @@
         <a class="w-100 text-decoration-none text-white" href="{% url 'task' task.id %}">
             <div class="d-flex border-top rounded m-3 p-2 justify-content-between align-items-center task-item  ">
                 <div class="">
-                    {% if task.complete == True %}            
+                    {% if task.completed == True %}            
                         <h4 class="m-0"> 
                             <i class="fa fa-circle text-success" style="font-size:24px;"></i>
                             <del class="text-success"><i>{{task.title}}</i></del>
@@ -52,7 +52,7 @@
                     {% endif %}
                 </div>
                 <div>
-                    {% if task.complete == False %}
+                    {% if task.completed == False %}
                     <a class="btn btn-dark m-0" href="{% url 'task-delete' task.id %}"><i class="fa fa-close " style="font-size:36px;color:red"></i></a>
                     {% else %}
                     DONE

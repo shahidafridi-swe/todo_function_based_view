@@ -1,15 +1,19 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Task
 from .forms import TaskForm
 
+@login_required(login_url='login')
 def tasks(request):
-    tasks = Task.objects.all()
+    tasks = Task.objects.filter(user=request.user)
+    incomplete_task_count =  tasks.filter(completed=False).count()
     context = {
-        'tasks': tasks
+        'tasks': tasks,
+        'incomplete_task_count':incomplete_task_count
     }
     return render(request, 'tasks/tasks.html', context)
 
-
+@login_required(login_url='login')
 def task(request, pk):
     task = Task.objects.get(id=pk)
     context = {
@@ -17,18 +21,24 @@ def task(request, pk):
     }
     return render(request, 'tasks/task.html', context)
 
+
+
+@login_required(login_url='login')
 def taskCreate(request):
     form = TaskForm()
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
+            task=form.save(commit=False)
+            task.user=request.user
+            task.save()
             return redirect('tasks')
     context = {
         'form': form
     }
     return render(request, 'tasks/task-form.html', context)
 
+@login_required(login_url='login')
 def taskUpdate(request, pk):
     task = Task.objects.get(id=pk)
     form = TaskForm(instance=task)
@@ -42,6 +52,7 @@ def taskUpdate(request, pk):
     }
     return render(request, 'tasks/task-form.html', context)
 
+@login_required(login_url='login')
 def taskDelete(request, pk):
     task =Task.objects.get(id=pk)
     context ={
