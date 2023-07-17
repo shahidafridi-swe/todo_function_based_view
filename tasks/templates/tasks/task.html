@@ -1,7 +1,28 @@
 {% extends "main.html" %}
 
 {% block content %}
+<div class="card-header d-flex justify-content-between">
 
-<h1>{{task.title}}</h1>
-  
+    <h1>{{task.title}}</h1>
+
+
+</div>
+<div class="card-body">
+    <p><span class="text-secondary me-3">Description: </span>
+        
+            {% if task.description %}
+                {{task.description}}
+            {% else %}
+                You didn't set any discription of this task.
+            {% endif %}
+    </p>
+</div>
+
+<div class="card-footer pt-3 text-body-secondary d-flex justify-content-between align-items-center">
+    <a class="btn btn-outline-secondary" href="{% url 'tasks' %}"> Go Back </a>
+
+    <a class="btn btn-outline-secondary" href="{% url 'task-update' task.id %}">Update</a>
+
+</div>
+
 {% endblock content %}

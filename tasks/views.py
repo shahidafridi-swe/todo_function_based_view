@@ -2,14 +2,17 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Task
 from .forms import TaskForm
+from .utils import searchTask
 
 @login_required(login_url='login')
 def tasks(request):
-    tasks = Task.objects.filter(user=request.user)
-    incomplete_task_count =  tasks.filter(completed=False).count()
+    incomplete_task_count =  Task.objects.filter(user=request.user).filter(completed=False).count()
+    tasks, search_query = searchTask(request)
+    tasks = tasks.filter(user=request.user)
     context = {
+        'search_query':search_query,
         'tasks': tasks,
-        'incomplete_task_count':incomplete_task_count
+        'incomplete_task_count':incomplete_task_count,
     }
     return render(request, 'tasks/tasks.html', context)
 
