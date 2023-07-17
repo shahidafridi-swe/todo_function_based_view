@@ -1,26 +1,66 @@
-{% extends 'main.html' %}
+{% extends "main.html" %}
 
 {% block content %}
 
-<h1>task list</h1>
-<table>
-    <tr>
-        <th>task</th>
-        <th>action</th>
-    </tr>
+<div class="card-header d-flex justify-content-between">
+    <!-- <div>
+        <h1 >Hello <span class="text-uppercase">{{request.user}}...</span>  </h1>
+        <h3>You have <i>{{count}}</i> incomplete task{{ count|pluralize:"s" }}</h3>
+    </div> -->
+    
+</div>
+
+
+
+<div class="d-flex rounded  m-1 p-3 justify-content-between align-items-center ">
+    <!-- <form class="w-50" method="get">
+        <div class="input-group mb-3">   
+            <input type="search" name="search-area" class="form-control" placeholder="Search Your Task" aria-label="Recipient's username" aria-describedby="button-addon2" value="{{search_input}}" >
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+         </div>
+    </form> -->
+      
+    <div>
+        <h4><a  class="text-success text-decoration-none btn btn-dark" href="{% url 'task-create' %}"> 
+            <i class="fa fa-plus" style="font-size:36px"></i>    
+        </a></h4>
+    </div>
+</div>
+
+
+<div>
     {% for task in tasks %}
-    <tr>
-        <td>{{task.title}}</td>
-        <td>
-            <a href="{% url 'task' task.id %}">view</a>
-            <a href="{% url 'task-create' %}">create</a>
-            <a href="{% url 'task-update' task.id %}">update</a>
-            <a href="{% url 'task-delete' task.id %}">delete</a>
-        </td>
-    </tr>
+        <a class="w-100 text-decoration-none text-white" href="{% url 'task' task.id %}">
+            <div class="d-flex border-top rounded m-3 p-2 justify-content-between align-items-center task-item  ">
+                <div class="">
+                    {% if task.complete == True %}            
+                        <h4 class="m-0"> 
+                            <i class="fa fa-circle text-success" style="font-size:24px;"></i>
+                            <del class="text-success"><i>{{task.title}}</i></del>
+                        </h4>
+                    {% else %}
+                        <h4 class="m-0">
+                            <i class="fa fa-circle" style="font-size:24px;"></i>
+                            {{task.title}}
+                        </h4>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if task.complete == False %}
+                    <a class="btn btn-dark m-0" href="{% url 'task-delete' task.id %}"><i class="fa fa-close " style="font-size:36px;color:red"></i></a>
+                    {% else %}
+                    DONE
+                    {% endif %}
+                </div>
+            </div>
+        </a>    
+
+    {% empty %}
+    <h4 class="m-0">
+        No Items in List
+    </h4>
+   
     {% endfor %}
     
-</table>
-  
+</div>
 {% endblock content %}
-
