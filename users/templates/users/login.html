@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="w-75 m-auto">
+    <div class="card-header mb-3">
+        <h2>Login Form</h2>
+    </div>
+
+    <form action="" method="post">
+        {% csrf_token %}
+
+        <div class="form-group p-3 {% if form.username.errors %}has-error{% endif %}">
+            <label for="id_username">Username:</label>
+            <input type="text" class="form-control form-control-custom" id="id_username" name="username" required>
+
+        </div>
+
+        <div class="form-group p-3 pt-0 {% if form.password.errors %}has-error{% endif %}">
+            <label for="id_password">Password:</label>
+            <input type="password" class="form-control form-control-custom" id="id_password" name="password" required>
+
+        </div>
+        <button type="submit" class="btn btn-outline-secondary mt-3 ms-3 w-25">Login</button>
+        <p class="p-3">Don't have an account? <a href="{% url 'register' %}"
+                class="text-decoration-none text-info">Register Here</a></p>
+    </form>
+</div>
+{% endblock content %}
