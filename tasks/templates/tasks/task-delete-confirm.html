@@ -1,0 +1,19 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="card-body">
+
+    <form action="" method="post">
+
+        {% csrf_token %}
+        <h3 class="mb-5">Are you sure, you want to delete {{task.title}}? </h3>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <a class="btn btn-outline-secondary w-25" href="{% url 'tasks' %}"> Go Back </a>
+        
+        <input class="btn btn-outline-secondary w-25" type="submit" value="Delete">
+        </div>
+
+    </form>
+</div>
+{% endblock content %}
