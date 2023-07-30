@@ -66,3 +66,30 @@ def taskDelete(request, pk):
         return redirect('tasks')
     
     return render(request, 'tasks/task-delete-confirm.html',context)
+
+
+@login_required(login_url='login')
+def completeTask(request, pk):
+    try:
+        task = Task.objects.get(id=pk)
+        task.completed = True
+        task.save()
+    except Task.DoesNotExist:
+        # Handle the case when the task does not exist
+        pass
+
+    return redirect('task', pk=pk)
+
+
+
+@login_required(login_url='login')
+def incompleteTask(request, pk):
+    try:
+        task = Task.objects.get(id=pk)
+        task.completed = False
+        task.save()
+    except Task.DoesNotExist:
+        # Handle the case when the task does not exist
+        pass
+
+    return redirect('task', pk=pk)

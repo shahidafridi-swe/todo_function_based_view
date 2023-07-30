@@ -16,13 +16,35 @@
                 You didn't set any discription of this task.
             {% endif %}
     </p>
+    <p>
+        
+            {% if task.completed %}
+            <span class="text-secondary me-3">The Task Has Completed </span>
+            
+            {% else %}
+            <span class=" me-3">The task is incompleted</span>
+             
+            {% endif %}
+    </p>
 </div>
 
 <div class="card-footer pt-3 text-body-secondary d-flex justify-content-between align-items-center">
     <a class="btn btn-outline-secondary" href="{% url 'tasks' %}"> Go Back </a>
+    
+    {% if task.completed %}
+    <a class="btn btn-outline-secondary" href="{% url 'incomplete-task' task.id %}" onclick="return confirmAction('incomplete')"> Click Here If Untill Incomplete </a>
+{% else %}
+    <a class="btn btn-outline-secondary" href="{% url 'complete-task' task.id %}" onclick="return confirmAction('complete')">Click Here If Complete </a>
+{% endif %}
+
 
     <a class="btn btn-outline-secondary" href="{% url 'task-update' task.id %}">Update</a>
 
 </div>
-
+<script>
+    function confirmAction(action) {
+        const confirmationMessage = `Are you sure you want to ${action} this task?`;
+        return confirm(confirmationMessage);
+    }
+</script>
 {% endblock content %}
